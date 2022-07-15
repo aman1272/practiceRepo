@@ -1,0 +1,30 @@
+.mainOption {
+    margin-top: 20vh;
+    margin-left: 47vh;
+}
+
+.heading {
+    margin-left: 35vh;
+    margin-top: 8vh
+}
+
+.box {
+    margin-left: 49vh;
+    margin-top: 8vh;
+}
+
+.option {
+    margin-left: 5vh;
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.grid {
+    margin-left: 3vh;
+}
+
+.submitBtn {
+    margin-left: 54vh;
+    margin-top: 8vh
+}
