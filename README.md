@@ -1,2 +1,0 @@
-# practiceRepo
-practice

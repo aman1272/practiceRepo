@@ -1,0 +1,634 @@
+
+
+import { useState, useRef, useMemo, useContext } from 'react';
+import * as React from 'react';
+import axios from 'axios';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import { Link, useSearchParams, } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import { useLocation } from 'react-router-dom'
+import queryString from 'query-string';
+
+const MyAgGridPractice = (props) => {
+    const location = useLocation()
+    const prevData = queryString.parse(location.search);           //        to find out value from params/querry
+
+    const handleClick = async () => {
+        setRowData(rowData)
+        const newData = JSON.stringify(rowData)
+        console.log('newJson', newData)
+        alert("Are you want to Submit Data to Server ?")
+        const finalSubmit = axios({
+            method: 'post',
+            url: "http://13.233.236.223:7000/api/v1/commission_grid",
+            data: {
+                "username": "aman@1234",
+                "product": `${prevData.product}`,
+                "grid": `${prevData.grid}`,
+                "data": `${newData}`
+            },
+            timeout: 1000 * 60,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        setOpen(true)
+        console.log('FinalData', finalSubmit)
+    }
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => setOpen(false);
+
+    function cellEditorSelector(params: ICellEditorParams) {
+        console.log(params, 'Step')
+        if (params.data.Vehicle_Type === '') {
+            return {
+                component: 'agRichSelectCellEditor',
+                params: {
+                    values: ['2 Wheeler', '4 Wheeler', "Both"],
+                },
+                popup: true,
+            }
+        }
+
+        return undefined;
+    }
+    const gridRef = useRef().React;
+    const [columnDefs, setColumnDefs] = useState([
+        { field: "RTO", headerName: "RTO", },
+        { field: "Vehicle_Type", headerName: "Vehicle Type", editable: true, cellEditorSelector: cellEditorSelector, },
+        { field: "Vehicle_subtype", headerName: "Vehicle subtype ", },
+        { field: "Public_Private", headerName: " Public/Private", },
+        { field: "Insurer_Name", headerName: "Insurer name", },
+        { field: "Total_Business", headerName: "Total Business", },
+        { field: "CC", headerName: "CC ", },
+        { field: "Tonnage", headerName: "Tonnage", },
+        { field: "Fuel_type", headerName: "Fuel Type", },
+        { field: "Policy_Type", headerName: "Policy Type", },
+        { field: "Discount", headerName: "Discount", },
+        { field: "Ownership", headerName: "Ownership", },
+        { field: "NCB", headerName: "NCB", },
+        { field: "New_Old", headerName: "New/ Old", },
+        { field: "Vehicle_Company", headerName: "Vehicle Company", },
+        { field: "Agent_Slab", headerName: "Agent Slab", },
+        { field: "Commission_TP", headerName: "Commission TP", pinned: 'right', width: 150 },
+        { field: "Commission_OD", headerName: "Commission OD", pinned: 'right', width: 150 },
+    ]);
+
+    const [rowData, setRowData] = useState([
+        {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        },
+        {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        }, {
+            RTO: "",
+            Vehicle_Type: "",
+            Vehicle_subtype: "",
+            Public_Private: "",
+            Insurer_name: "",
+            Total_Business: "",
+            CC: "",
+            Tonnage: "",
+            Fuel_Type: "",
+            Policy_Type: "",
+            Discount: "",
+            Ownership: "",
+            NCB: "",
+            New_Old: "",
+            Vehicle_Company: "",
+            Agent_Slab: "",
+            Commission_TP: "",
+            Commission_OD: "",
+        },
+
+    ])
+
+    const defaultColDef = useMemo(() => {
+        return {
+            flex: 2,
+            editable: true,
+            resizable: true,
+
+            // enableRowGroup: true,
+            // enablePivot: true,
+            // enableValue: true,
+        };
+    }, []);
+
+    return (
+        <div>
+            <Link to='/homePage'>
+                <HomeIcon />
+            </Link>
+            <div className="ag-theme-alpine" style={{ width: 1365, height: 580 }}>
+
+                <AgGridReact
+                    ref={gridRef}
+                    columnHoverHighlight={true}
+                    rowData={rowData}
+                    cellEditorPopup={true}
+                    columnDefs={columnDefs}
+                    enableFillHandle={true}
+                    animateRows={true}
+                    rowSelection='multiple'
+                    // enableCellTextSelection={true}     //--------------------full row selected when column select
+                    defaultColDef={defaultColDef}
+                    enableRangeSelection={true}
+                    enableRangeHandle={true}
+                    // sideBar={sideBar}
+                    suppressMultiRangeSelection={true}
+                // rowGroupPanelShow={'always'}
+                // pivotPanelShow={'always'}
+                />
+            </div>
+
+            <button style={{ marginLeft: "105vh" }} onClick={handleClick}>Submit</button>
+            <div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            Data Saved Successfully
+                        </Typography>
+                    </Box>
+                </Modal>
+            </div>
+
+        </div>
+    );
+};
+export default MyAgGridPractice;
